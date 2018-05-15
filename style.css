@@ -1,0 +1,22 @@
+:root {
+    --kinovar: rgb(204,8,3);
+}
+
+body {
+    color: black !important;
+    background-color: white;
+    font-family: 'Ponomar Unicode' !important;
+}
+
+wide, strong {
+    font-size: 130%;
+    font-weight: normal;
+    display: inline-block;
+    transform: scaleY(0.77);
+}
+
+red, redbukva, em {
+    display: inline;
+    font-style: normal;
+    color: var(--kinovar);
+}
