@@ -1,47 +1,60 @@
 const cuMarkdown = require('markdown-it-church-slavonic');
-const vscode = require('vscode');
-var markdownit = require('markdown-it');
+const { renderXML, renderLaTeX } = cuMarkdown;
+const { window, Uri, workspace, WorkspaceEdit, Position, commands } = require('vscode');
 
-require('supports-color');
+let markdownEngine;  // will be set when Markdown plugin activates
 
-const fs = require("fs");
+const churchSlavonicGenerate = (render, suffix) => () => {
+    if (window.activeTextEditor === undefined) {
+        return window.showErrorMessage('Please open a Markdown document first');
+    }
 
-/**
- * @param {vscode.ExtensionContext} context
- */
-function activate(context) {
+    if (window.activeTextEditor.document.languageId !== 'markdown') {
+        return window.showErrorMessage(
+            'This command requires current document to be "markdown", got ' +
+            window.activeTextEditor.document.languageId
+        );
+    }
 
-    let disposable = vscode.commands.registerCommand('csl.generateXml', function () {  
-        let currentFile =  vscode.window.activeTextEditor.document.uri.fsPath;
-        var xmlRendrer = markdownit().use(cuMarkdown, { renderer: 'xml' });
-        fs.readFile(currentFile, 'utf8', function(err, data) {
-            if (err) throw err;
-            let xml = xmlRendrer.render(data);
-            let newFileName = currentFile.substr(0, currentFile.lastIndexOf('.')) + '.xml';
-            fs.writeFile(newFileName, xml, err => {
-                if (err) {
-                    return vscode.window.showErrorMessage(
-                      "Failed to create boilerplate file!"
-                    );
-                } else {
-                    vscode.window.showInformationMessage('File sucessfully created');
-                    vscode.workspace.openTextDocument(newFileName).then(doc => {
-                        vscode.window.showTextDocument(doc);
-                     });
-                }
-            });
+    if (markdownEngine === undefined) {
+        return window.showErrorMessage(
+            'Internal error - failed to initialize Markdown extension');
+    }
 
-          });
+    const inputText = window.activeTextEditor.document.getText();
+    const outputText = render(markdownEngine, inputText);
+
+    const currentFile = window.activeTextEditor.document.uri.fsPath;
+    const newFileName = currentFile.substr(0, currentFile.lastIndexOf('.')) + suffix;
+    const newFile = Uri.parse('untitled:' + newFileName);
+
+    workspace.openTextDocument(newFile).then(document => {
+        const edit = new WorkspaceEdit();
+        edit.insert(newFile, new Position(0, 0), outputText);
+        return workspace.applyEdit(edit).then(success => {
+            if (success) {
+                window.showTextDocument(document);
+            } else {
+                window.showInformationMessage('Error');
+            }
+        });
     });
+};
 
-    context.subscriptions.push(disposable);
+exports.activate = (context) => {
+
+    context.subscriptions.push(commands.registerCommand(
+        'church-slavonic-generate-xml', churchSlavonicGenerate(renderXML, '.xml')));
+
+    context.subscriptions.push(commands.registerCommand(
+        'church-slavonic-generate-latex', churchSlavonicGenerate(renderLaTeX, '.tex')));
 
     return {
         extendMarkdownIt(md) {
-            return md.use(cuMarkdown);
+            markdownEngine = md.use(cuMarkdown);
+            return markdownEngine;
         }
-    }
-}
+    };
+};
 
-exports.activate = activate;
-exports.deactivate = function deactivate() {};
+exports.deactivate = () => {};

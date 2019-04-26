@@ -15,7 +15,10 @@
     "categories": [
         "Other"
     ],
-    "activationEvents": [],
+    "activationEvents": [
+        "onCommand:church-slavonic-generate-xml",
+        "onCommand:church-slavonic-generate-latex"
+    ],
     "main": "./extension",
     "contributes": {
         "markdown.markdownItPlugins": true,
@@ -25,8 +28,12 @@
         ],
         "commands": [
             {
-                "command": "csl.generateXml",
-                "title": "csl-generate-xml"
+                "command": "church-slavonic-generate-xml",
+                "title": "CU Generate XML"
+            },
+            {
+                "command": "church-slavonic-generate-latex",
+                "title": "CU Generate LaTeX"
             }
         ]
     },
@@ -36,12 +43,11 @@
     "devDependencies": {
         "vscode": "^1.1.6",
         "eslint": "^4.11.0",
-        "markdown-it": "^8.4.2",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
     },
     "dependencies": {
         "church-slavonic-fonts": "^1.0.0",
-        "markdown-it-church-slavonic": "^0.0.1"
+        "markdown-it-church-slavonic": "^0.0.4"
     }
 }
