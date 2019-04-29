@@ -4,7 +4,7 @@ const { window, Uri, workspace, WorkspaceEdit, Position, commands } = require('v
 
 let markdownEngine;  // will be set when Markdown plugin activates
 
-const churchSlavonicGenerate = (render, suffix) => () => {
+const churchSlavonicGenerate = (render, language) => () => {
     if (window.activeTextEditor === undefined) {
         return window.showErrorMessage('Please open a Markdown document first');
     }
@@ -24,30 +24,28 @@ const churchSlavonicGenerate = (render, suffix) => () => {
     const inputText = window.activeTextEditor.document.getText();
     const outputText = render(markdownEngine, inputText);
 
-    const currentFile = window.activeTextEditor.document.uri.fsPath;
-    const newFileName = currentFile.substr(0, currentFile.lastIndexOf('.')) + suffix;
-    const newFile = Uri.parse('untitled:' + newFileName);
-
-    workspace.openTextDocument(newFile).then(document => {
+    workspace.openTextDocument({language}).then(document => {
         const edit = new WorkspaceEdit();
-        edit.insert(newFile, new Position(0, 0), outputText);
+        edit.insert(document.uri, new Position(0, 0), outputText);
         return workspace.applyEdit(edit).then(success => {
             if (success) {
                 window.showTextDocument(document);
             } else {
-                window.showInformationMessage('Error');
+                window.showErrorMessage('Error applying edit (unexpected)');
             }
         });
+    }).catch(error => {
+        window.showErrorMessage('Error: ' + error);
     });
 };
 
 exports.activate = (context) => {
 
     context.subscriptions.push(commands.registerCommand(
-        'church-slavonic-generate-xml', churchSlavonicGenerate(renderXML, '.xml')));
+        'church-slavonic-generate-xml', churchSlavonicGenerate(renderXML, 'xml')));
 
     context.subscriptions.push(commands.registerCommand(
-        'church-slavonic-generate-latex', churchSlavonicGenerate(renderLaTeX, '.tex')));
+        'church-slavonic-generate-latex', churchSlavonicGenerate(renderLaTeX, 'tex')));
 
     return {
         extendMarkdownIt(md) {
