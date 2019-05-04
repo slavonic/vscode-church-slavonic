@@ -15,13 +15,26 @@
     "categories": [
         "Other"
     ],
-    "activationEvents": [],
+    "activationEvents": [
+        "onCommand:church-slavonic-generate-xml",
+        "onCommand:church-slavonic-generate-latex"
+    ],
     "main": "./extension",
     "contributes": {
         "markdown.markdownItPlugins": true,
         "markdown.previewStyles": [
             "./node_modules/church-slavonic-fonts/css/fonts.css",
             "./style.css"
+        ],
+        "commands": [
+            {
+                "command": "church-slavonic-generate-xml",
+                "title": "CU Generate XML"
+            },
+            {
+                "command": "church-slavonic-generate-latex",
+                "title": "CU Generate LaTeX"
+            }
         ]
     },
     "scripts": {
@@ -35,6 +48,6 @@
     },
     "dependencies": {
         "church-slavonic-fonts": "^1.0.0",
-        "markdown-it-church-slavonic": "^0.0.1"
+        "markdown-it-church-slavonic": "^0.0.4"
     }
 }
