@@ -2,7 +2,7 @@
     "name": "vscode-church-slavonic",
     "displayName": "vscode-church-slavonic",
     "description": "",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/slavonic/vscode-church-slavonic"
@@ -48,6 +48,6 @@
     },
     "dependencies": {
         "church-slavonic-fonts": "^1.0.0",
-        "markdown-it-church-slavonic": "^1.0.0"
+        "markdown-it-church-slavonic": "^1.0.1"
     }
 }
