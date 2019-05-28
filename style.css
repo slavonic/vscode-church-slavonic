@@ -8,14 +8,14 @@ body {
     font-family: 'Ponomar Unicode' !important;
 }
 
-wide, strong {
+wide {
     font-size: 130%;
     font-weight: normal;
     display: inline-block;
     transform: scaleY(0.77);
 }
 
-red, redbukva, em {
+red, redbukva, kinovar {
     display: inline;
     font-style: normal;
     color: var(--kinovar);
