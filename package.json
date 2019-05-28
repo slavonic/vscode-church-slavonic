@@ -48,6 +48,6 @@
     },
     "dependencies": {
         "church-slavonic-fonts": "^1.0.0",
-        "markdown-it-church-slavonic": "^1.0.0",
+        "markdown-it-church-slavonic": "^1.0.0"
     }
 }
