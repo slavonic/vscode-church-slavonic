@@ -1,7 +1,8 @@
 {
     "name": "vscode-church-slavonic",
     "displayName": "vscode-church-slavonic",
-    "description": "",
+    "icon": "images/logo.png",
+    "description": "Church Slavonic Markdown",
     "version": "0.1.1",
     "repository": {
         "type": "git",
