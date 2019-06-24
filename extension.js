@@ -1,6 +1,8 @@
 const cuMarkdown = require('markdown-it-church-slavonic');
 const { renderXML, renderLaTeX } = cuMarkdown;
 const { window, Uri, workspace, WorkspaceEdit, Position, commands } = require('vscode');
+const { theme } = require('./theme.js');
+
 
 let markdownEngine;  // will be set when Markdown plugin activates
 
@@ -39,7 +41,39 @@ const churchSlavonicGenerate = (render, language) => () => {
     });
 };
 
+const adjustThemeSettingsIfNeeded = () => {
+    const config = workspace.getConfiguration();
+    const custom = config.get('editor.tokenColorCustomizations');
+    let changed = false;
+
+    if (!custom['textMateRules']) {
+        custom['textMateRules'] = [];
+    }
+    const rules = custom['textMateRules'];
+
+    const find = (what) => {
+        return rules.filter(val => val['scope'] == what).length > 0;
+    };
+
+    theme.forEach(val => {
+        if (!find(val.scope)) {
+            rules.push(val);
+            changed = true;
+        }
+    })
+
+    if (changed) {
+        config.update('editor.tokenColorCustomizations', custom, true).then(() => {
+            window.showInformationMessage('Updated settings to include Church Slavonic Markdown colors');
+        }).catch(error => {
+            window.showErrorMessage('Error: ' + error);
+        })
+    }
+}
+
 exports.activate = (context) => {
+
+    adjustThemeSettingsIfNeeded();
 
     context.subscriptions.push(commands.registerCommand(
         'church-slavonic-generate-xml', churchSlavonicGenerate(renderXML, 'xml')));

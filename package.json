@@ -1,7 +1,7 @@
 {
     "name": "vscode-church-slavonic",
     "displayName": "vscode-church-slavonic",
-    "icon": "images/logo.png",
+    "icon": "./images/logo.png",
     "description": "Church Slavonic Markdown",
     "version": "0.1.2",
     "repository": {
@@ -35,6 +35,15 @@
             {
                 "command": "church-slavonic-generate-latex",
                 "title": "CU Generate LaTeX"
+            }
+        ],
+        "grammars": [
+            {
+                "path": "./syntaxes/markdown-churchslavonic.json",
+                "scopeName": "markdown.churchslavonic",
+                "injectTo": [
+                    "text.html.markdown"
+                ]
             }
         ]
     },
