@@ -3,7 +3,7 @@
     "displayName": "vscode-church-slavonic",
     "icon": "images/logo.png",
     "description": "Church Slavonic Markdown",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/slavonic/vscode-church-slavonic"
