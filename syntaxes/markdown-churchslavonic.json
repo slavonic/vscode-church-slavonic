@@ -1,0 +1,104 @@
+{
+    "scopeName": "markdown.churchslavonic",
+    "injectionSelector": "L:meta.paragraph.markdown",
+    "patterns": [
+        {
+            "include": "#kinovar"
+        },
+        {
+            "include": "#wide"
+        },
+        {
+            "include": "#redbukva"
+        },
+        {
+            "include": "#bukvitsa"
+        },
+        {
+            "include": "#pagebreak1"
+        },
+        {
+            "include": "#pagebreak2"
+        }
+    ],
+    "repository": {
+        "kinovar": {
+            "name": "markup.kinovar",
+            "match": "(=)([^=]+)(=)",
+            "captures": {
+                "1": {
+                    "name": "markup.kinovar.delim"
+                },
+                "3": {
+                    "name": "markup.kinovar.delim"
+                }
+            }
+        },
+        "wide": {
+            "name": "markup.wide",
+            "match": "(\\+)([^\\+]+)(\\+)",
+            "captures": {
+                "1": {
+                    "name": "markup.wide.delim"
+                },
+                "3": {
+                    "name": "markup.wide.delim"
+                }
+            }
+        },
+        "redbukva": {
+            "name": "markup.kinovar.redbukva",
+            "match": "(\\~)((?:оу|Оу|ᲂу|\\p{L})\\p{M}*)",
+            "captures": {
+                "1": {
+                    "name": "markup.kinovar.delim"
+                }
+            }
+        },
+        "bukvitsa": {
+            "name": "markup.bukvitsa",
+            "match": "(\\^)((?:оу|Оу|ᲂу|\\p{L})\\p{M}*)",
+            "captures": {
+                "1": {
+                    "name": "markup.bukvitsa.delim"
+                }
+            }
+        },
+        "pagebreak1": {
+            "name": "markup.pagebreak",
+            "match": "(\\<\\<)\\s*(\\d+)\\s*(\\>\\>)",
+            "captures": {
+                "1": {
+                    "name": "markup.pagebreak.delim"
+                },
+                "2": {
+                    "name": "markup.pagebreak.number"
+                },
+                "3": {
+                    "name": "markup.pagebreak.delim"
+                }
+            }
+        },
+        "pagebreak2": {
+            "name": "markup.pagebreak",
+            "match": "(\\<\\<)\\s*(\\d+)\\s*(:)\\s*(.*?)(\\>\\>)",
+            "captures": {
+                "1": {
+                    "name": "markup.pagebreak.delim"
+                },
+                "2": {
+                    "name": "markup.pagebreak.number"
+                },
+                "3": {
+                    "name": "markup.pagebreak.delim"
+                },
+                "4": {
+                    "name": "markup.pagebreak.label"
+                },
+                "5": {
+                    "name": "markup.pagebreak.delim"
+                }
+            }
+        }
+    }
+}
