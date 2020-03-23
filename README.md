@@ -13,5 +13,12 @@
 
 ## Release Notes
 
+### 0.1.3
+Fixed stretched (wide) styling in preview
+
+### 0.1.2
+All seem to be working
+
 ### 0.0.1
 Initial release
+

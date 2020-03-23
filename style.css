@@ -9,10 +9,17 @@ body {
 }
 
 wide {
-    font-size: 130%;
-    font-weight: normal;
-    display: inline-block;
-    transform: scaleY(0.77);
+    letter-spacing: 0.1rem;
+}
+
+bukvitsa {
+    height: 3rem;
+    padding-right: 0.25rem;
+    font-family: 'Indiction Unicode';
+    font-size: 300%;
+    float: left;
+    color: var(--kinovar);
+    margin-top: -0.4rem;
 }
 
 red, redbukva, kinovar {
